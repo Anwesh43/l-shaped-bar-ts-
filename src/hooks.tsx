@@ -15,7 +15,7 @@ export const useAnimatedScale = () => {
                     setScale((prev : number) => {
                         if (prev > 1) {
                             setAnimated(false)
-    
+                            clearInterval(interval)
                             return 0 
                         }
                         return prev + scGap 
@@ -51,22 +51,25 @@ export const useStyle = (w : number, h : number, scale : number) => {
     const top = `${h / 2}px`
     const background = 'indigo'
     const size : number = Math.min(w, h) / 10
-    const sf : number = Math.sin(scale * Math.PI / 180)
+    const sf : number = Math.sin(scale * Math.PI)
     return {
-        parentStyle() : CSSProperties {
+        parentStyle(i : number) : CSSProperties {
             return {
                 position,
                 left, 
-                top
+                top,
+                transform: `rotate(${90 * i}deg)`
             }
         },
-        blockStyle(i : number) : CSSProperties {
+        blockStyle() : CSSProperties {
             return {
                 position,
                 left : `${-size / 2}px`,
                 top: `${-size / 2}px`,
                 width : `${size + 2 * size * sf}px`,
-                height: `${size}px`
+                height: `${size}px`,
+                background,
+                
             }
         }
     }

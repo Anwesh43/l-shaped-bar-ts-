@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import {useStyle} from './hooks'
 import withContext from "./withContext";
 
@@ -11,9 +11,13 @@ interface LSBProps {
 
 const LShapedBar = (props : LSBProps) => {
     const {parentStyle, blockStyle} = useStyle(props.w, props.h, props.scale)
-    return (<div style = {parentStyle()} onClick = {() => props.onClick()}>
-        {[0, 1].map(i => (<div key = {`block_${i}`} style = {blockStyle(i)}></div>))}
-    </div>)
+    return (
+        <Fragment>
+        {[0, 1].map((i : number) => (<div style = {parentStyle(i)} onClick = {() => props.onClick()}>
+                <div key = {`block_${i}`} style = {blockStyle()}></div>
+                </div>))}
+        </Fragment>
+    )
 }
 
 export default withContext(LShapedBar)
