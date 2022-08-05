@@ -1,4 +1,4 @@
-import {useState, useEffect} from 'react'
+import {useState, useEffect, CSSProperties} from 'react'
 
 const scGap : number = 0.01 
 const delay : number = 20 
@@ -45,3 +45,29 @@ export const useDimension = () => {
     }
 }
 
+export const useStyle = (w : number, h : number, scale : number) => {
+    const position = 'absolute'
+    const left = `${w / 2}px`
+    const top = `${h / 2}px`
+    const background = 'indigo'
+    const size : number = Math.min(w, h) / 10
+    const sf : number = Math.sin(scale * Math.PI / 180)
+    return {
+        parentStyle() : CSSProperties {
+            return {
+                position,
+                left, 
+                top
+            }
+        },
+        blockStyle(i : number) : CSSProperties {
+            return {
+                position,
+                left : `${-size / 2}px`,
+                top: `${-size / 2}px`,
+                width : `${size + 2 * size * sf}px`,
+                height: `${size}px`
+            }
+        }
+    }
+}
